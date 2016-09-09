@@ -10,7 +10,7 @@ int threshold = 600;
 // Connect the LED to digital pin 9
 int ledPin = 9;
 
-// The photoresistor leg is connected to analog pin 0
+// The photoresistor lead is connected to analog pin 0
 int sensor = A0;
 // stores the analog reading value
 int sensorValue = 0;
