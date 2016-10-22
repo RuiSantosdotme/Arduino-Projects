@@ -1,3 +1,8 @@
+/*
+ * Rui Santos 
+ * Complete Project Details http://randomnerdtutorials.com
+ */
+
 int button_midC = 2;
 int button_Csharp = 3;
 int button_D = 4;
@@ -7,7 +12,7 @@ int button_F = 7;
 int button_Fsharp = 8;
 int button_G = 9;
 int button_Gsharp = 10;
-int button_A=11;
+int button_A = 11;
 
 int speaker = 12;
 
