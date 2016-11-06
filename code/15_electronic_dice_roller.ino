@@ -85,7 +85,8 @@ B11011011,
 B11011011,
 B00000000};
 
-int buttonPin = 9;
+int buttonPin = 8;
+
 int result = 0;
 
 void setup() {
