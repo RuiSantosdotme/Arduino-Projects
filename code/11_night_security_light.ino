@@ -3,7 +3,7 @@
  * Complete Project Details http://randomnerdtutorials.com
  */
  
-// Relay pin is controlled with D11. The active wire is connected to Normally Closed and common
+// Relay pin is controlled with D8. The active wire is connected to Normally Closed and common
 int relay = 8;
 volatile byte relayState = LOW;
 
