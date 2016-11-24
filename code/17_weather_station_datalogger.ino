@@ -65,14 +65,14 @@ void setup() {
     Serial.print("Initializing SD card...");
 
     if (!SD.begin(chipSelect)) {
-    Serial.println("initialization failed!");
-    return;
+      Serial.println("initialization failed!");
+      return;
     }
     Serial.println("initialization done.");
 
     if(pressure.begin())
       Serial.println("BMP180 init success");
-    else{
+    else {
       // Oops, something went wrong, this is usually a connection problem,
       // see the comments at the top of this sketch for the proper connections.
       Serial.println("BMP180 init fail\n\n");
@@ -203,7 +203,8 @@ void loggingPressure(){
   }
   else Serial.println("error starting temperature measurement\n"); //for debugging
   
-  }
+}
+
 void loop() {
   loggingTime();
   loggingTemperature();
