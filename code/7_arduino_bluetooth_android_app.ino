@@ -15,7 +15,6 @@ int ledPWM = 6;
 
 int state;
 int flag = 0;      //makes sure that the serial only prints once the state
-int stateStop = 0;
 
 unsigned long previousMillis = 0;
 const long interval = 5000;
