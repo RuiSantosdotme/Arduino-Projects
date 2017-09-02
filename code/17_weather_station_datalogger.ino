@@ -10,9 +10,6 @@
 #include <RTClib.h>
 #include <SFE_BMP180.h>
 
-//how many milliseconds between grabbing data and logging it
-#define LOG_INTERVAL 2000 
-
 //define DHT pin
 #define DHTPIN 2     // what pin we're connected to
 
@@ -51,37 +48,36 @@ void setup() {
   
   // setup for the RTC
   while (!Serial); // for Leonardo/Micro/Zero
-    if (! rtc.begin()) {
-      Serial.println("Couldn't find RTC");
-      while (1);
-    }
-    else{
-      // following line sets the RTC to the date & time this sketch was compiled
-      //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-    }
-    if (! rtc.isrunning()) {
-      Serial.println("RTC is NOT running!");
-    }
-    Serial.print("Initializing SD card...");
+  if (! rtc.begin()) {
+    Serial.println("Couldn't find RTC");
+    while (1);
+  }
+  else {
+    // following line sets the RTC to the date & time this sketch was compiled
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  }
+  if (! rtc.isrunning()) {
+    Serial.println("RTC is NOT running!");
+  }
+  Serial.print("Initializing SD card...");
 
-    if (!SD.begin(chipSelect)) {
-      Serial.println("initialization failed!");
-      return;
-    }
-    Serial.println("initialization done.");
+  if (!SD.begin(chipSelect)) {
+    Serial.println("initialization failed!");
+    return;
+  }
+  Serial.println("initialization done.");
 
-    if(pressure.begin())
-      Serial.println("BMP180 init success");
-    else {
-      // Oops, something went wrong, this is usually a connection problem,
-      // see the comments at the top of this sketch for the proper connections.
-      Serial.println("BMP180 init fail\n\n");
-      while(1); // Pause forever. 
-    }
+  if(pressure.begin())
+    Serial.println("BMP180 init success");
+  else {
+    // Oops, something went wrong, this is usually a connection problem,
+    // see the comments at the top of this sketch for the proper connections.
+    Serial.println("BMP180 init fail\n\n");
+    while(1); // Pause forever. 
+  }
   
   // open the file. note that only one file can be open at a time,
   // so you have to close this one before opening another.
-  
   myFile=SD.open("DATA.txt", FILE_WRITE);
 
   // if the file opened ok, write to it:
