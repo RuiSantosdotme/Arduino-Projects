@@ -4,8 +4,9 @@
  */
 
 
-// Include DHT library
+// Include DHT library and Adafruit Sensor Library
 #include "DHT.h"
+#include <Adafruit_Sensor.h>
 //Include Software Serial library to communicate with GSM
 #include <SoftwareSerial.h>
 
