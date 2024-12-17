@@ -4,51 +4,70 @@
 */
  
 #include <IRremote.h>
- 
-int IR_Recv = 11;   //IR Receiver Pin 3
-int bluePin = 10;
-int greenPin = 9;
-int yellowPin = 8;
- 
-IRrecv irrecv(IR_Recv);
-decode_results results;
- 
-void setup(){
-  Serial.begin(9600);  //starts serial communication
-  irrecv.enableIRIn(); // Starts the receiver
-  pinMode(bluePin, OUTPUT);      // sets the digital pin as output
-  pinMode(greenPin, OUTPUT);      // sets the digital pin as output
-  pinMode(yellowPin, OUTPUT);      // sets the digital pin as output 
 
+const int RECV_PIN = 11;
+
+const int bluePin = 10;
+const int greenPin = 9;
+const int yellowPin = 8;
+
+void setup() {
+  Serial.begin(9600); // Start serial communication
+  IrReceiver.begin(RECV_PIN, ENABLE_LED_FEEDBACK); // Start the receiver
+
+  pinMode(bluePin, OUTPUT);    // Set the pins as output
+  pinMode(greenPin, OUTPUT);
+  pinMode(yellowPin, OUTPUT);
 }
- 
-void loop(){
-  //decodes the infrared input
-  if (irrecv.decode(&results)){
-    long int decCode = results.value;
-    Serial.println(results.value);
-    //switch case to use the selected remote control button
-    switch (results.value){
-      case 551520375: //when you press the 1 button
+
+void loop() {
+  // Decode the infrared input
+  if (IrReceiver.decode()) {
+    if (IrReceiver.decodedIRData.protocol == UNKNOWN) {
+      IrReceiver.resume(); // Resume receiving for the next signal
+      return; // Skip this loop iteration
+    }
+
+    // Print the received command for debugging
+    IrReceiver.printIRResultShort(&Serial);
+
+    switch (IrReceiver.decodedIRData.command) {
+      case 0x01: // Command to turn ON the blue LED
         digitalWrite(bluePin, HIGH);
-        break;   
-      case 551495895: //when you press the 4 button
-        digitalWrite(bluePin, LOW);   
+        Serial.println("Blue LED ON");
         break;
-       case 551504055: //when you press the 2 button
+
+      case 0x02: // Command to turn ON the green LED
         digitalWrite(greenPin, HIGH);
-        break;           
-       case 551528535: //when you press the 5 button
-        digitalWrite(greenPin, LOW);
-        break;       
-       case 551536695: //when you press the 3 button
+        Serial.println("Green LED OFF");
+        break;
+
+      case 0x03: // Command to turn ON the yellow LED
         digitalWrite(yellowPin, HIGH);
-        break;       
-       case 551512215: //when you press the 6 button
+        Serial.println("Yellow LED ON");
+        break;
+
+      case 0x04: // Command to turn ON the yellow LED
+        digitalWrite(bluePin, LOW);
+        Serial.println("Blue LED OFF");
+        break;
+
+      case 0x05: // Command to turn ON the yellow LED
+        digitalWrite(greenPin, LOW);
+        Serial.println("Green LED OFF");
+        break;
+
+      case 0x06: // Command to turn ON the yellow LED
         digitalWrite(yellowPin, LOW);
+        Serial.println("Yellow LED OFF");
+        break;
+
+      default: // Unknown command
+        Serial.println("Unknown Command");
         break;
     }
-    irrecv.resume(); // Receives the next value from the button you press
+
+    IrReceiver.resume(); // Receive the next value
   }
   delay(10);
 }
