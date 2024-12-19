@@ -47,17 +47,17 @@ void loop() {
         Serial.println("Yellow LED ON");
         break;
 
-      case 0x04: // Command to turn ON the yellow LED
+      case 0x04: // Command to turn OFF the blue LED
         digitalWrite(bluePin, LOW);
         Serial.println("Blue LED OFF");
         break;
 
-      case 0x05: // Command to turn ON the yellow LED
+      case 0x05: // Command to turn OFF the green LED
         digitalWrite(greenPin, LOW);
         Serial.println("Green LED OFF");
         break;
 
-      case 0x06: // Command to turn ON the yellow LED
+      case 0x06: // Command to turn OFF the yellow LED
         digitalWrite(yellowPin, LOW);
         Serial.println("Yellow LED OFF");
         break;
